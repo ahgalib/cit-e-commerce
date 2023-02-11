@@ -25,7 +25,7 @@
                             @endif
                         </td>
                         <td>
-                            <button class="btn btn-danger m-2">Delete</button>
+                            <button class="btn btn-danger m-2"><a href="{{route('user.delete',$user->id)}}" class="text-light">Delete</a></button>
                         </td>
                     </tr>
                 @endforeach

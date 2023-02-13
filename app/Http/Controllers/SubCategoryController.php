@@ -23,7 +23,7 @@ class SubCategoryController extends Controller
         SubCategory::create([
             'category_id' => $request['category_id'],
             'sub_category_name' => $data['sub_category_name'],
-            'added_by' => Auth::id(),
+            'user_id' => Auth::id(),
         ]);
 
         return back();

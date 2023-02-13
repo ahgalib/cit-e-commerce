@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sub_categories', function (Blueprint $table) {
+        Schema::create('product_colors', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->string('sub_category_name');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-
+            $table->string('color_name');
+            $table->string('color_code');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_categories');
+        Schema::dropIfExists('product_colors');
     }
 };

@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-lg-8">
-        <table class="table table-striped">
+        <table class="table table-striped" id="table_id">
             <thead>
                 <th>SI No</th>
                 <th>Sub Category Name</th>
@@ -20,11 +20,12 @@
                         <td>{{$sub_category->rel_to_user->name}}</td> --}}
                         <td>
                             @if($sub_category->rel_to_category->deleted_at == null)
-                            null nai
+                            {{$sub_category->rel_to_category->name}}
                             @else
-                            null pace
+                            soft deleted obstay axe
                             @endif
                         </td>
+                        <td> {{$sub_category->rel_to_user->name}} </td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn btn-success light sharp" data-toggle="dropdown">
@@ -78,6 +79,11 @@
 @endsection
 
 @section('js_section')
+<script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+</script>
 <script>
     $(".catVal").change(function(){
         let catVal = $(this).val();

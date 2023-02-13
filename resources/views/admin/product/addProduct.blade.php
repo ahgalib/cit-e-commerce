@@ -8,7 +8,7 @@
                 <h3>Add Product</h3>
             </div>
             <div class="card-body" style="margin-top:-26px;">
-                <form action="{{route('subCategory.create')}}" method="post">
+                <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-lg-6">
@@ -19,6 +19,7 @@
                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>
+                            <span style="color:red">@error('category_id') {{$message}} @enderror</span>
                         </div>
 
                         {{-- ajax sub category select option --}}
@@ -27,55 +28,60 @@
                             <select name="sub_category_id" class="form-control catInfo">
                                 <option value="">Select One</option>
                            </select>
+                           <span style="color:red">@error('sub_category_id') {{$message}} @enderror</span>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="mt-3">
-                                <input type="text" name="product_name" class="form-control" placeholder="product name">
+                                <input type="text" name="product_name" class="form-control" placeholder="product name" value={{old('product_name')}}>
+                                <span style="color:red">@error('product_name') {{$message}} @enderror</span>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="mt-3">
-                                <input type="number" name="product_price" class="form-control" placeholder="product price">
+                                <input type="number" name="product_price" class="form-control" placeholder="product price" value={{old('product_price')}}>
+                                <span style="color:red">@error('product_price') {{$message}} @enderror</span>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="mt-3">
-                                <input type="number" name="discount" class="form-control" placeholder="Discount % ">
+                                <input type="number" name="discount" class="form-control" placeholder="Discount %" value={{old('discount')}}>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="mt-3">
-                                <input type="text" name="brand" class="form-control" placeholder="Brand">
+                                <input type="text" name="brand" class="form-control" placeholder="Brand" value={{old('brand')}}>
                             </div>
                         </div>
 
                         <div class="col-lg-12">
                             <div class="mt-3">
-                                <textarea name="short_desc" id="" cols="30" rows="5" class="form-control" placeholder="short description"></textarea>
+                                <textarea name="short_desc" id="" cols="30" rows="5" class="form-control" placeholder="short description">{{old('short_desc')}}</textarea>
                             </div>
                         </div>
 
                         <div class="col-lg-12">
                             <div class="mt-3">
-                                <textarea name="long_desc" id="" cols="30" rows="5" class="form-control" placeholder="long description"></textarea>
+                                <textarea name="long_desc" id="summernote" cols="30" rows="5" class="form-control" placeholder="long description">{{old('long_desc')}}</textarea>
+                                <span style="color:red">@error('long_desc') {{$message}} @enderror</span>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="mt-3">
                                 <label for="" class="form-label">Product Preview</label>
-                                <input type="file" name="product_preview" class="form-control">
+                                <input type="file" name="preview" class="form-control">
+                                <span style="color:red">@error('preview') {{$message}} @enderror</span>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="mt-3">
                                 <label for="" class="form-label">Product Thumbnails</label>
-                                <input type="file" name="product_thumbnails" class="form-control">
+                                <input type="file" name="thumbnail[]" multiple class="form-control">
                             </div>
                         </div>
 
@@ -103,7 +109,7 @@
         })
 
         $.ajax({
-            url:'/ajax/product/store',
+            url:'/ajax/subCategory',
             type:'post',
             data:{catId:catId},
             success:function(resp){
@@ -113,6 +119,12 @@
         })
 
     })
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
 </script>
 
 @endsection

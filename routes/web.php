@@ -34,5 +34,9 @@ Route::post('/ajaxSubCategory',[SubCategoryController::class,'ajaxSubCategory'])
 
 //product route
 Route::get('/product',[ProductController::class,'index'])->name('product');
-Route::get('/product/store',[ProductController::class,'store'])->name('product.store');
-Route::post('/ajax/product/store',[ProductController::class,'storeAjax']);
+Route::get('add/product',[ProductController::class,'addProduct'])->name('product.add');
+Route::post('/ajax/subCategory',[ProductController::class,'getSubCategoryAjax']);
+Route::post('/product/store',[ProductController::class,'productStore'])->name('product.store');
+Route::get('/product/veriant',[ProductController::class,'productVeriant'])->name('product.veriant');
+Route::post('/product/color/store',[ProductController::class,'productColorStore'])->name('product.color.store');
+Route::post('/product/size/store',[ProductController::class,'productSizeStore'])->name('product.size.store');

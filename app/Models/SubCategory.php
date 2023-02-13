@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class SubCategory extends Model
 {
     use HasFactory;
-
     protected $guarded = [];
 
     public function rel_to_user(){
-        return $this->belongsTo(User::class,'added_by');
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function rel_to_category(){

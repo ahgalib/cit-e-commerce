@@ -17,6 +17,9 @@
 	<link href="{{asset('dashboard_asset/vendor/owl-carousel/owl.carousel.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard_asset/css/style.css')}}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    {{-- summer note --}}
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
 </head>
 <body>
 
@@ -811,9 +814,10 @@
 							<span class="nav-text">Product</span>
 						</a>
                         <ul aria-expanded="false">
-                            <li><a href="">Product</a></li>
-                            <li><a href="{{route('product.store')}}">Add Product</a></li>
-                            <li><a href="">Trashed Category</a></li>
+                            <li><a href="{{route('product')}}">Product</a></li>
+                            <li><a href="{{route('product.add')}}">Add Product</a></li>
+                            <li><a href="#">Trashed Category</a></li>
+                            <li><a href="{{route('product.veriant')}}">Product Veriant</a></li>
                         </ul>
                     </li>
 
@@ -884,6 +888,9 @@
 
 	<!-- Dashboard 1 -->
 	<script src="{{asset('dashboard_asset/js/dashboard/dashboard-1.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
+
 	<script>
 		function carouselReview(){
 			/*  testimonial one function by = owl.carousel.js */

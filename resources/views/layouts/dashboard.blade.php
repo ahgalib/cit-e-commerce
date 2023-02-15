@@ -818,6 +818,7 @@
                             <li><a href="{{route('product.add')}}">Add Product</a></li>
                             <li><a href="#">Trashed Category</a></li>
                             <li><a href="{{route('product.veriant')}}">Product Veriant</a></li>
+
                         </ul>
                     </li>
 

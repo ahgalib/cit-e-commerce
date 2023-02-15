@@ -115,4 +115,72 @@ class ProductController extends Controller
         ]);
         return back();
     }
+
+    public function edit($slug){
+        $data = Category::all();
+        $product = Product::where('slug',$slug)->first();
+        //echo"<pre>";print_r($product);die;
+        return view('admin.product.editProduct',compact('product','data'));
+    }
+
+    public function update(Request $request,$id){
+
+        //image update
+        if($request->preview){
+
+            //delete old image
+            $find_image = Product::find($id);
+            $image = $find_image['image'];
+
+
+            $image = $find_image['image'];
+            echo $image;
+            die;
+            $image_path = public_path('/upload/products/'.$image);
+            unlink($image_path);
+
+            //insert new image
+            $image = $request['image'];
+            $image_extension = $image->getClientOriginalExtension();
+            $image_new_name = rand(000000,999999).'.'.$image_extension;
+            $main_image = Image::make($image)->save(public_path('/upload/products/'.$image_new_name));
+
+            //update with image
+            Product::where('id',$id)->update([
+                'category_id' => $request['category_id'],
+                'product_name' => $request['product_name'],
+                'title' => $request['title'],
+                'price' => $request['price'],
+                'discount' => $request['discount'],
+                'brand' => $request['brand'],
+                'description' => $request['description'],
+                'image' => $image_new_name,
+                'stock' => $request['stock'],
+                'slug' => str_replace(' ','-',$request['product_name']).'-'.rand(000000,999999),
+            ]);
+
+        }else{
+            echo "image nai";
+            //update without image
+            // Product::where('id',$id)->update([
+            //     'category_id' => $request['category_id'],
+            //     'product_name' => $request['product_name'],
+            //     'title' => $request['title'],
+            //     'price' => $request['price'],
+            //     'discount' => $request['discount'],
+            //     'brand' => $request['brand'],
+            //     'description' => $request['description'],
+            //     'stock' => $request['stock'],
+            //     'slug' => str_replace(' ','-',$request['product_name']).'-'.rand(000000,999999),
+            // ]);
+        }
+
+        // $response = [
+        //     'success' => true,
+        //     'message' => 'product updated successfully'
+        // ];
+
+        // return response()->json($response,200);
+    }
+
 }

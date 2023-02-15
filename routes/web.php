@@ -40,3 +40,6 @@ Route::post('/product/store',[ProductController::class,'productStore'])->name('p
 Route::get('/product/veriant',[ProductController::class,'productVeriant'])->name('product.veriant');
 Route::post('/product/color/store',[ProductController::class,'productColorStore'])->name('product.color.store');
 Route::post('/product/size/store',[ProductController::class,'productSizeStore'])->name('product.size.store');
+
+Route::get('/product/edit/{slug}',[ProductController::class,'edit'])->name('product.edit');
+Route::post('/product/update/{slug}',[ProductController::class,'update'])->name('product.update');

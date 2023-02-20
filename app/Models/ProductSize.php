@@ -9,4 +9,8 @@ class ProductSize extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function rel_to_product(){
+        return $this->belongsTo(Product::class);
+    }
 }

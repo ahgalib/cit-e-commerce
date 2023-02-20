@@ -17,4 +17,10 @@ class Product extends Model
     public function rel_to_cate(){
         return $this->belongsTo(Category::class,'category_id');
     }
+
+    public function rel_to_thumb(){
+        return $this->hasMany(ProductThumbnail::class);
+    }
+
+
 }

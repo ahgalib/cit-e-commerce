@@ -5,10 +5,13 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CouponController;
+
 use App\Http\Controllers\FrontEnd\FrontProductController;
 use App\Http\Controllers\FrontEnd\LoginController;
 use App\Http\Controllers\FrontEnd\RegisterController;
 use App\Http\Controllers\FrontEnd\CartController;
+use App\Http\Controllers\FrontEnd\CheckoutController;
 
 Auth::routes();
 
@@ -58,10 +61,13 @@ Route::get('/product/delete/{id}',[ProductController::class,'deleteProduct'])->n
 Route::get('/product/edit/{slug}',[ProductController::class,'edit'])->name('product.edit');
 Route::post('/product/update/{slug}',[ProductController::class,'update'])->name('product.update');
 
+//coupon
+Route::get('/coupon',[CouponController::class,'index'])->name('coupon');
+Route::post('/coupon/create',[CouponController::class,'create'])->name('coupon.create');
 
 
 //Front End Route
-Route::get('/',[FrontProductController::class,'index']);
+Route::get('/',[FrontProductController::class,'index'])->name('shop.home');
 Route::get('/product/details/{slug}',[FrontProductController::class,'productDetails'])->name('product.details');
 Route::post('/ajax/product/veriant',[FrontProductController::class,'ajaxProductVeriant']);
 Route::get('/customer/login/register',[RegisterController::class,'customerLoginRegister'])->name('customer.login.register');
@@ -72,3 +78,13 @@ Route::get('/customer/logout',[LoginController::class,'customerLogout'])->name('
 //cart route
 Route::get('product/cart/43433534',[CartController::class,'index'])->name('cart');
 Route::post('product/cart/43433534/stoere',[CartController::class,'storeCart'])->name('cart.store');
+Route::get('product/cart/delete/{id}',[CartController::class,'deleteCart'])->name('cart.delete');
+Route::post('product/cart/update',[CartController::class,'updateCart'])->name('cart.update');
+
+//checkout route
+Route::get('shop/checkout/47833534',[CheckoutController::class,'index'])->name('checkout');
+Route::post('/ajax/getCities',[CheckoutController::class,'getCities']);
+Route::post('checkout/4343/store/confirm',[CheckoutController::class,'checkoutStore'])->name('checkout.store');
+Route::get('shop/checkout/complete/ere47833534',[CheckoutController::class,'orderComplete'])->name('order.complete');
+
+

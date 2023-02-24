@@ -45,11 +45,11 @@
                                 </a>
                                 @endforeach
 
-
                             </div><!-- End .product-image-gallery -->
                         </div><!-- End .row -->
                     </div><!-- End .product-gallery -->
                 </div><!-- End .col-md-6 -->
+
 
                 <div class="col-md-6">
                     <div class="product-details">
@@ -128,16 +128,19 @@
                                     <input type="number" id="qty" class="form-control" name="quantity" required>
                                 </div><!-- End .product-details-quantity -->
                             </div><!-- End .details-filter-row -->
-
+                            @if(session('stock_out'))
+                                <span style="color:red;">{{session('stock_out')}}</span>
+                            @endif
                             <div class="product-details-action">
+
                                 <button type="submit" class="btn-product btn-cart"><span>add to cart</span></button>
 
                         </form>   {{-- end cart form --}}
 
-                            <div class="details-action-wrapper">
-                                <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
-                                <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
-                            </div><!-- End .details-action-wrapper -->
+                        <div class="details-action-wrapper">
+                            <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+                            <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
+                        </div><!-- End .details-action-wrapper -->
                         </div><!-- End .product-details-action -->
 
                         <div class="product-details-footer">
@@ -160,6 +163,7 @@
                         </div><!-- End .product-details-footer -->
                     </div><!-- End .product-details -->
                 </div><!-- End .col-md-6 -->
+
             </div><!-- End .row -->
         </div><!-- End .product-details-top -->
 

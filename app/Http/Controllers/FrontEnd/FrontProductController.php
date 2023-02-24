@@ -26,13 +26,9 @@ class FrontProductController extends Controller
         $category = Product::where('category_id',$product->category_id)->first();
         $sub_cat = Product::where('category_id',$product->category_id)->get();
         $product_color = Inventory::where('product_id',$product_id)->groupBy('product_color_id')->selectRaw('count(*) as total,product_color_id')->get();
-        //echo $product_color;die;
-        //echo $category;die;
-        //echo $product_inventory;die;
+        $product_size =  Inventory::where('product_id',$product_id)->get();
 
-        //echo $product_thumbnails;die;
-        //echo $product_id;die;
-        return view('front_end.details',compact('product','product_thumbnails','product_inventory','category','related_product','sub_cat','product_color'));
+        return view('front_end.details',compact('product','product_thumbnails','product_inventory','category','related_product','sub_cat','product_color','product_size'));
     }
 
 

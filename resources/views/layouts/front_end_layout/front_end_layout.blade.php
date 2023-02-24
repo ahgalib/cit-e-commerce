@@ -154,62 +154,50 @@
                             <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                                 <div class="icon">
                                     <i class="icon-shopping-cart"></i>
-                                    <span class="cart-count">2</span>
+                                    <span class="cart-count">{{App\Models\Cart::where('customer_id',Auth::guard('customerlogin')->id())->count()}}</span>
                                 </div>
                                 <p>Cart</p>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right">
                                 <div class="dropdown-cart-products">
-                                    <div class="product">
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.html">Beige knitted elastic runner shoes</a>
-                                            </h4>
+                                    @php
+                                        $sub_total = 0;
+                                    @endphp
+                                    @foreach(App\Models\Cart::where('customer_id',Auth::guard('customerlogin')->id())->get() as $cart)
+                                        <div class="product">
+                                            <div class="product-cart-details">
+                                                <h4 class="product-title">
+                                                    <a href="product.html">{{$cart->rel_to_product->product_name}}</a>
+                                                </h4>
 
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty">1</span>
-                                                x $84.00
-                                            </span>
-                                        </div><!-- End .product-cart-details -->
+                                                <span class="cart-product-info">
+                                                    <span class="cart-product-qty">{{$cart->quantity}}</span>
+                                                    x{{$cart->rel_to_product->after_discount}}
+                                                </span>
+                                            </div><!-- End .product-cart-details -->
 
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="{{asset('front_end_asset/images/products/cart/product-1.jpg')}}" alt="product">
-                                            </a>
-                                        </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
+                                            <figure class="product-image-container">
+                                                <a href="product.html" class="product-image">
+                                                    <img src="{{asset('upload/products')}}/{{$cart->rel_to_product->preview}}" alt="product">
+                                                </a>
+                                            </figure>
+                                            <a href="{{route('cart.delete',$cart->id)}}" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                        </div><!-- End .product -->
+                                        @php
+                                            $sub_total += $cart->rel_to_product->after_discount * $cart->quantity
+                                        @endphp
 
-                                    <div class="product">
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.html">Blue utility pinafore denim dress</a>
-                                            </h4>
-
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty">1</span>
-                                                x $76.00
-                                            </span>
-                                        </div><!-- End .product-cart-details -->
-
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="{{asset('front_end_asset/images/products/cart/product-2.jpg')}}" alt="product">
-                                            </a>
-                                        </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
+                                    @endforeach
                                 </div><!-- End .cart-product -->
-
                                 <div class="dropdown-cart-total">
                                     <span>Total</span>
 
-                                    <span class="cart-total-price">$160.00</span>
+                                    <span class="cart-total-price">{{$sub_total}} TK.</span>
                                 </div><!-- End .dropdown-cart-total -->
 
                                 <div class="dropdown-cart-action">
-                                    <a href="cart.html" class="btn btn-primary">View Cart</a>
+                                    <a href="{{route('cart')}}" class="btn btn-primary">View Cart</a>
                                     <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
                                 </div><!-- End .dropdown-cart-total -->
                             </div><!-- End .dropdown-menu -->
@@ -226,24 +214,16 @@
                         <nav class="main-nav">
                             <ul class="menu">
                                 <li class="megamenu-container active">
-                                    <a href="index.html" class="">Home</a>
-
-
+                                    <a href="/" class="">Home</a>
                                 </li>
                                 <li>
                                     <a href="category.html" class="sf-with-ul">Shop</a>
-
-
                                 </li>
                                 <li>
                                     <a href="product.html" class="sf-with-ul">Product</a>
-
-
                                 </li>
                                 <li>
                                     <a href="#" class="sf-with-ul">Pages</a>
-
-
                                 </li>
 
                             </ul><!-- End .menu -->

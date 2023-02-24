@@ -6,7 +6,7 @@
 
         <div>
             <h2 style="margin-bottom:30px">Add Inventory for <span style="color:rgb(0, 132, 255);font-size:29px;">{{$product->product_name}}</span></h2>
-            <h4 style="margin-bottom:30px">Product price is {{$product->product_price}} tk</h4>
+            <h4 style="margin-bottom:30px">Product price is {{$product->after_discount}} tk</h4>
             <img src="{{asset('upload/products')}}/{{$product->preview}}" alt="" style="width:200px;">
         </div>
     </div>

@@ -33,6 +33,7 @@
                                 <div class="col-sm-6">
                                     <label>First Name *</label>
                                     <input type="text" class="form-control" name="name" value="{{Auth::guard('customerlogin')->user()->name}}">
+                                    <input type="hidden" name="customer_id" value="{{Auth::guard('customerlogin')->id()}}">
                                 </div><!-- End .col-sm-6 -->
 
                                 <div class="col-sm-6">
@@ -156,7 +157,7 @@
 
                                 <div class="custom-control custom-radio">
                                     <input type="radio" id="sslcom" name="payment_method" class="custom-control-input" value="2">
-                                    <label class="custom-control-label" for="sslcom">SSLCommerce</label>
+                                    <label class="custom-control-label" for="sslcom">SSLCommerz</label>
                                 </div><!-- End .custom-control -->
 
                                 <div class="custom-control custom-radio">

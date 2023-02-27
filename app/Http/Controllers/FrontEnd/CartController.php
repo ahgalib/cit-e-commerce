@@ -5,6 +5,7 @@ namespace App\Http\Controllers\FrontEnd;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\Wishlist;
 use App\Models\Coupon;
 use App\Models\Inventory;
 use Auth;
@@ -47,17 +48,31 @@ class CartController extends Controller
     }
 
     public function storeCart(Request $request){
-        if($request->quantity > Inventory::where(['product_id'=>$request->product_id,'product_size_id'=>$request->size_id,'product_color_id'=>$request->color_id])->first()->quantity){
-            return back()->with('stock_out','Stock Out');
+        //add to cart
+        if($request->check_button == 1){
+            if($request->quantity > Inventory::where(['product_id'=>$request->product_id,'product_size_id'=>$request->size_id,'product_color_id'=>$request->color_id])->first()->quantity){
+                return back()->with('stock_out','Stock Out');
+            }else{
+                Cart::create([
+                    'customer_id' => Auth::guard('customerlogin')->id(),
+                    'product_id' => $request->product_id,
+                    'size_id' => $request->size_id,
+                    'color_id' => $request->color_id,
+                    'quantity' => $request->quantity,
+                ]);
+            }
         }else{
-            Cart::create([
+            //add to wishlist
+            Wishlist::create([
                 'customer_id' => Auth::guard('customerlogin')->id(),
                 'product_id' => $request->product_id,
                 'size_id' => $request->size_id,
                 'color_id' => $request->color_id,
                 'quantity' => $request->quantity,
             ]);
-        }
+            return back();
+
+        };
 
         return redirect()->route('cart');
     }

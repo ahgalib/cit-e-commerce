@@ -80,15 +80,17 @@ class CheckoutController extends Controller
                 Inventory::where(['product_id'=>$cart->product_id,'product_color_id'=>$cart->color_id,'product_size_id'=>$cart->size_id])->decrement('quantity',$cart->quantity);
             }
             //Invoice
-            Mail::to($request->email)->send(new InvoiceMail($order_id));
+           // Mail::to($request->email)->send(new InvoiceMail($order_id));
 
 
-            // Cart::where('customer_id',Auth::guard('customerlogin')->id())->delete();
+            Cart::where('customer_id',Auth::guard('customerlogin')->id())->delete();
 
             return redirect()->route('order.complete')->withOrder($order_id);
         }
         else if($request->payment_method == 2){
-            echo "cash on sslcommerce";
+            $data = $request->all();
+            // return $data;die;
+            return redirect()->route('pay')->with('data',$data);
         }
         else{
             echo "stripe or bank";
@@ -100,7 +102,7 @@ class CheckoutController extends Controller
             $order_id = session('order');
             return view('front_end.completeOrder',compact('order_id'));
         }else{
-            echo "hou ini";
+           abort('404');
         }
 
     }

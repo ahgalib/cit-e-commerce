@@ -13,7 +13,7 @@ use App\Models\Category;
 class FrontProductController extends Controller
 {
     public function index(){
-        $products = Product::latest()->limit(5)->get();
+        $products = Product::limit(5)->get();
         return view('front_end.index',compact('products'));
     }
 

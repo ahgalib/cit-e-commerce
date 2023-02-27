@@ -133,15 +133,16 @@
                             @endif
                             <div class="product-details-action">
 
-                                <button type="submit" class="btn-product btn-cart"><span>add to cart</span></button>
+                                <button type="submit" class="btn-product btn-cart" name="check_button" value="1"><span>add to cart</span></button>
+                                <div class="details-action-wrapper">
+                                    <button type="submit" class="btn-product btn-cart" name="check_button" value="2"><span>add to wishlist</span></button>
+                                    <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
+                                </div><!-- End .details-action-wrapper -->
+                                </div><!-- End .product-details-action -->
+
 
                         </form>   {{-- end cart form --}}
 
-                        <div class="details-action-wrapper">
-                            <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
-                            <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
-                        </div><!-- End .details-action-wrapper -->
-                        </div><!-- End .product-details-action -->
 
                         <div class="product-details-footer">
                             <div class="product-cat">

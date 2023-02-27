@@ -204,13 +204,13 @@
 			</table>
 
 			<table class="balance">
+                <tr>
+                    <th><span contenteditable>Discount</span></th>
+                    <td><span data-prefix>TK.</span><span>{{App\Models\Order::where('order_id',$order_id)->first()->discount}}</span></td>
+                </tr>
 				<tr>
 					<th><span contenteditable>Subtotal</span></th>
 					<td><span data-prefix>$</span><span>{{App\Models\Order::where('order_id',$order_id)->first()->subtotal}}</span></td>
-				</tr>
-                <tr>
-					<th><span contenteditable>Discount</span></th>
-					<td><span data-prefix>TK.</span><span>{{App\Models\Order::where('order_id',$order_id)->first()->discount}}</span></td>
 				</tr>
 				<tr>
 					<th><span contenteditable>Chargr</span></th>
@@ -220,6 +220,16 @@
 					<th><span contenteditable>Total Balance</span></th>
 					<td><span data-prefix>$</span><span>{{App\Models\Order::where('order_id',$order_id)->first()->total}}</span></td>
 				</tr>
+			</table>
+
+            <table class="">
+				<tr>
+					<th>Billing Information</th>
+					<td>
+                        {{ App\Models\BillingDetail::where('order_id',$order_id)->first()->name}}, <span style="color:darkorange">{{ App\Models\BillingDetail::where('order_id',$order_id)->first()->email}} </span>, <span>{{ App\Models\BillingDetail::where('order_id',$order_id)->first()->address}} </span>,  {{ App\Models\BillingDetail::where('order_id',$order_id)->first()->phone}}
+                    </td>
+				</tr>
+
 			</table>
 		</article>
 

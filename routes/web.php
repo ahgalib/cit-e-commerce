@@ -6,12 +6,18 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\OrderController;
 
 use App\Http\Controllers\FrontEnd\FrontProductController;
 use App\Http\Controllers\FrontEnd\LoginController;
 use App\Http\Controllers\FrontEnd\RegisterController;
 use App\Http\Controllers\FrontEnd\CartController;
 use App\Http\Controllers\FrontEnd\CheckoutController;
+use App\Http\Controllers\FrontEnd\CustomerController;
+use App\Http\Controllers\FrontEnd\WishlistController;
+use App\Http\Controllers\SslCommerzPaymentController;
+
+
 
 Auth::routes();
 
@@ -41,9 +47,6 @@ Route::get('/subCategory',[SubCategoryController::class,'index'])->name('subCate
 Route::post('/subCategory/create',[SubCategoryController::class,'create'])->name('subCategory.create');
 Route::post('/ajaxSubCategory',[SubCategoryController::class,'ajaxSubCategory']);
 
-
-//product route
-
 //show product
 Route::get('/product',[ProductController::class,'index'])->name('product');
 
@@ -64,6 +67,11 @@ Route::post('/product/update/{slug}',[ProductController::class,'update'])->name(
 //coupon
 Route::get('/coupon',[CouponController::class,'index'])->name('coupon');
 Route::post('/coupon/create',[CouponController::class,'create'])->name('coupon.create');
+//order route
+Route::get('admin/order/list',[OrderController::class,'index'])->name('order');
+Route::post('order/status',[OrderController::class,'orderStatus'])->name('order.status');
+
+
 
 
 //Front End Route
@@ -77,9 +85,11 @@ Route::get('/customer/logout',[LoginController::class,'customerLogout'])->name('
 
 //cart route
 Route::get('product/cart/43433534',[CartController::class,'index'])->name('cart');
-Route::post('product/cart/43433534/stoere',[CartController::class,'storeCart'])->name('cart.store');
+Route::post('product/cart/43433534/store',[CartController::class,'storeCart'])->name('cart.store');
 Route::get('product/cart/delete/{id}',[CartController::class,'deleteCart'])->name('cart.delete');
 Route::post('product/cart/update',[CartController::class,'updateCart'])->name('cart.update');
+//wishtlist route
+Route::get('product/wishlist/43433534',[WishlistController::class,'index'])->name('wishlist');
 
 //checkout route
 Route::get('shop/checkout/47833534',[CheckoutController::class,'index'])->name('checkout');
@@ -87,4 +97,20 @@ Route::post('/ajax/getCities',[CheckoutController::class,'getCities']);
 Route::post('checkout/4343/store/confirm',[CheckoutController::class,'checkoutStore'])->name('checkout.store');
 Route::get('shop/checkout/complete/ere47833534',[CheckoutController::class,'orderComplete'])->name('order.complete');
 
+//customer profile route
+Route::get('shop/customer/profile/4783',[CustomerController::class,'index'])->name('customer');
+Route::get('invoice/download/{order_id}',[CustomerController::class,'invoiceDownload'])->name('invoice.download');
 
+// SSLCOMMERZ Start
+Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+Route::get('/pay', [SslCommerzPaymentController::class, 'index'])->name('pay');
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END

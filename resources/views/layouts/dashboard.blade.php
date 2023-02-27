@@ -808,7 +808,6 @@
                         </ul>
                     </li>
 
-
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-television"></i>
 							<span class="nav-text">Product</span>
@@ -818,19 +817,26 @@
                             <li><a href="{{route('product.add')}}">Add Product</a></li>
                             <li><a href="#">Trashed Category</a></li>
                             <li><a href="{{route('product.veriant')}}">Product Veriant</a></li>
-
                         </ul>
                     </li>
 
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                         <i class="flaticon-381-television"></i>
                         <span class="nav-text">Coupon</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="{{route('coupon')}}">Coupon</a></li>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('coupon')}}">Coupon</a></li>
+                        </ul>
+                    </li>
 
-                    </ul>
-                </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-381-television"></i>
+                        <span class="nav-text">Order</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('order')}}">Order</a></li>
+                        </ul>
+                    </li>
 
                 </ul>
 

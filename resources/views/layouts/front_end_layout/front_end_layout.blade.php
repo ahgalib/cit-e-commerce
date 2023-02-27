@@ -69,13 +69,15 @@
                                             <a href="#">{{Auth::guard('customerlogin')->user()->name}}</a>
                                             <div class="header-menu">
                                                 <ul>
+                                                    <li><a href="{{route('customer')}}">Profile</a></li>
+                                                </ul>
+                                                <ul>
                                                     <li><a href="{{route('customer.logout')}}">LogOut</a></li>
 
                                                 </ul>
                                             </div><!-- End .header-menu -->
                                         </div>
-                                        @else
-
+                                    @else
                                         <li><a href="{{route('customer.login.register')}}">Sign in / Sign up</a></li>
                                     @endauth
                                 </ul>
@@ -141,10 +143,10 @@
                         </div><!-- End .compare-dropdown -->
 
                         <div class="wishlist">
-                            <a href="wishlist.html" title="Wishlist">
+                            <a href="{{route('wishlist')}}" title="Wishlist">
                                 <div class="icon">
                                     <i class="icon-heart-o"></i>
-                                    <span class="wishlist-count badge">3</span>
+                                    <span class="wishlist-count badge">{{App\Models\Wishlist::where('customer_id',Auth::guard('customerlogin')->id())->count()}}</span>
                                 </div>
                                 <p>Wishlist</p>
                             </a>

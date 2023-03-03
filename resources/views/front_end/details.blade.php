@@ -217,6 +217,32 @@
                     </div><!-- End .product-desc-content -->
                 </div><!-- .End .tab-pane -->
                 <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
+                    @if(Auth::guard('customerlogin'))
+                        @if(App\Models\OrderProduct::where(['customer_id'=>Auth::guard('customerlogin')->id(),'product_id' => $product->id])->exists())
+                            @if(App\Models\OrderProduct::where(['customer_id'=>Auth::guard('customerlogin')->id(),'product_id' => $product->id,'review'=>null])->first())
+                                <form action="">
+                                    <div class="d-flex ">
+                                        <input type="text" class="form-control" name="name" value="{{Auth::guard('customerlogin')->user()->name}}">
+                                        <input type="text" class="form-control"  name="email" value="{{Auth::guard('customerlogin')->user()->email}}">
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="name">Your Review *</label>
+                                        <textarea type="text" class="form-control" name="review"></textarea>
+                                    </div><!-- End .form-group -->
+
+                                </form>
+                            @else
+                                <p>You already review this product</p>
+                            @endif
+
+                        @else
+                            <p>PLease First buy the product and then review it</p>
+                        @endif
+
+                    @else
+                        <a href="{{route('customer.login.register')}}" class="btn btn-primary mb-2">Please Login to Place a review</a>
+                    @endif
                     <div class="reviews">
                         <h3>Reviews (2)</h3>
                         <div class="review">
@@ -225,7 +251,7 @@
                                     <h4><a href="#">Samanta J.</a></h4>
                                     <div class="ratings-container">
                                         <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                            <div class="ratings-val" style="width: 70%;"></div><!-- End .ratings-val -->
                                         </div><!-- End .ratings -->
                                     </div><!-- End .rating-container -->
                                     <span class="review-date">6 days ago</span>
@@ -245,31 +271,7 @@
                             </div><!-- End .row -->
                         </div><!-- End .review -->
 
-                        <div class="review">
-                            <div class="row no-gutters">
-                                <div class="col-auto">
-                                    <h4><a href="#">John Doe</a></h4>
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                    </div><!-- End .rating-container -->
-                                    <span class="review-date">5 days ago</span>
-                                </div><!-- End .col -->
-                                <div class="col">
-                                    <h4>Very good</h4>
 
-                                    <div class="review-content">
-                                        <p>Sed, molestias, tempore? Ex dolor esse iure hic veniam laborum blanditiis laudantium iste amet. Cum non voluptate eos enim, ab cumque nam, modi, quas iure illum repellendus, blanditiis perspiciatis beatae!</p>
-                                    </div><!-- End .review-content -->
-
-                                    <div class="review-action">
-                                        <a href="#"><i class="icon-thumbs-up"></i>Helpful (0)</a>
-                                        <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                    </div><!-- End .review-action -->
-                                </div><!-- End .col-auto -->
-                            </div><!-- End .row -->
-                        </div><!-- End .review -->
                     </div><!-- End .reviews -->
                 </div><!-- .End .tab-pane -->
             </div><!-- End .tab-content -->

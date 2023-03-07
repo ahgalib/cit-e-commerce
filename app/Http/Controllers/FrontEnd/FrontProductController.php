@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductThumbnail;
 use App\Models\Inventory;
 use App\Models\Category;
+use App\Models\OrderProduct;
 
 
 class FrontProductController extends Controller
@@ -27,8 +28,11 @@ class FrontProductController extends Controller
         $sub_cat = Product::where('category_id',$product->category_id)->get();
         $product_color = Inventory::where('product_id',$product_id)->groupBy('product_color_id')->selectRaw('count(*) as total,product_color_id')->get();
         $product_size =  Inventory::where('product_id',$product_id)->get();
+        $product_review = OrderProduct::where('product_id',$product_id)->where('review','!=',null)->get();
+        $review_count = OrderProduct::where('product_id',$product_id)->where('review','!=',null)->count();
+        $review_star_count = OrderProduct::where('product_id',$product_id)->where('review','!=',null)->sum('star');
 
-        return view('front_end.details',compact('product','product_thumbnails','product_inventory','category','related_product','sub_cat','product_color','product_size'));
+        return view('front_end.details',compact('product','product_thumbnails','product_inventory','category','related_product','sub_cat','product_color','product_size','product_review','review_count','review_star_count'));
     }
 
 
@@ -45,6 +49,12 @@ class FrontProductController extends Controller
     }
 
 
-
+    public function productReviewStore(Request $request){
+        OrderProduct::where(['customer_id'=>$request->customer_id,'product_id'=>$request->product_id])->update([
+            'review'=>$request->review,
+            'star'=>$request->star,
+        ]);
+        return back();
+    }
 
 }

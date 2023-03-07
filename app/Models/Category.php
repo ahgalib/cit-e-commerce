@@ -19,5 +19,9 @@ class Category extends Model
         return $this->hasMany(SubCategory::class,'category_id');
     }
 
+    public function rel_to_product(){
+        return $this->hasMany(Product::class,'category_id');
+    }
+
 
 }

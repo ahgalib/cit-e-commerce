@@ -104,13 +104,12 @@
                     <div class="header-center">
                         <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
                             <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
-                            <form action="#" method="get">
-                                <div class="header-search-wrapper search-wrapper-wide">
-                                    <label for="q" class="sr-only">Search</label>
-                                    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search product ..." required>
-                                </div><!-- End .header-search-wrapper -->
-                            </form>
+                            <div class="header-search-wrapper search-wrapper-wide">
+                                <label for="q" class="sr-only">Search</label>
+                                <button class="btn btn-primary" type="submit" id="search_btn"><i class="icon-search"></i></button>
+                                <input type="search" class="form-control" name="q" id="search_input" value="{{@$_GET['q']}}" placeholder="Search product ...">
+                            </div><!-- End .header-search-wrapper -->
+
                         </div><!-- End .header-search -->
                     </div>
 
@@ -649,8 +648,16 @@
     <!-- Main JS File -->
     <script src="{{asset('front_end_asset/js/main.js')}}"></script>
     <script src="{{asset('front_end_asset/js/demos/demo-3.js')}}"></script>
+    @yield('footer_script')
+    {{-- search  --}}
+    {{-- <script>
+        $("#search_btn").click(function(){
+            let search_input = $("#search_input").val();
 
-    @yield('footer-script')
+           let link = "{{route('search')}}" + "?q=" + search_input;
+            window.location.href = link;
+        })
+    </script> --}}
 </body>
 
 

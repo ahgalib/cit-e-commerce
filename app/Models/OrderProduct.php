@@ -21,4 +21,8 @@ class OrderProduct extends Model
     public function rel_to_product_size(){
         return $this->belongsTo(ProductSize::class,'size_id');
     }
+
+    public function rel_to_customer(){
+        return $this->belongsTo(Customerlogin::class,'customer_id');
+    }
 }

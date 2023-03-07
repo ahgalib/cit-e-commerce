@@ -63,11 +63,14 @@
                                 <h5 class="product-title">{{$product->product_price}}</h5>
                             @endif
                         </div>
+
                         <div class="ratings-container">
-                            <div class="ratings">
-                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                            <div>
+                                @for ($i = 1; $i<=$review_star_count/2;$i++)
+                                    <i class="icon-star" style="color:yellow"></i>
+                                @endfor
                             </div><!-- End .ratings -->
-                            <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
+                            <a class="ratings-text" href="#product-review-link" id="review-link">Review ( {{$review_count}} )</a>
                         </div><!-- End .rating-container -->
 
                         <div class="product-price">
@@ -180,7 +183,7 @@
                     <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Shipping & Returns</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
+                    <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews ({{$review_count}})</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -217,20 +220,37 @@
                     </div><!-- End .product-desc-content -->
                 </div><!-- .End .tab-pane -->
                 <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
-                    @if(Auth::guard('customerlogin'))
+                    @auth('customerlogin')
                         @if(App\Models\OrderProduct::where(['customer_id'=>Auth::guard('customerlogin')->id(),'product_id' => $product->id])->exists())
                             @if(App\Models\OrderProduct::where(['customer_id'=>Auth::guard('customerlogin')->id(),'product_id' => $product->id,'review'=>null])->first())
-                                <form action="">
+                                <form action="{{route('review.store')}}" method="post">
+                                    @csrf
                                     <div class="d-flex ">
-                                        <input type="text" class="form-control" name="name" value="{{Auth::guard('customerlogin')->user()->name}}">
-                                        <input type="text" class="form-control"  name="email" value="{{Auth::guard('customerlogin')->user()->email}}">
+                                        <input type="hidden" class="form-control" name="customer_id" value="{{Auth::guard('customerlogin')->id()}}">
+                                        <input type="hidden" class="form-control" name="product_id" value="{{$product->id}}">
+                                        <input type="text" class="form-control" readonly value="{{Auth::guard('customerlogin')->user()->name}}">
+                                        <input type="text" class="form-control" readonly value="{{Auth::guard('customerlogin')->user()->email}}">
                                     </div>
 
                                     <div class="form-group col-md-12">
                                         <label for="name">Your Review *</label>
+                                        <i class="icon-star" style="color:yellow"></i>
                                         <textarea type="text" class="form-control" name="review"></textarea>
                                     </div><!-- End .form-group -->
 
+                                    <label for="size">Star:</label>
+                                    <div class="select-custom">
+                                        <select name="star" class="form-control">
+                                            <option value="">Give some star</option>
+                                            <option value="1">1 Star</option>
+                                            <option value="2">2 Star</option>
+                                            <option value="3">3 Star</option>
+                                            <option value="4">4 Star</option>
+                                            <option value="5">5 Star</option>
+                                        </select>
+                                    </div><!-- End .select-custom -->
+
+                                    <button class="btn btn-outline-warning mb-2">Review</button>
                                 </form>
                             @else
                                 <p>You already review this product</p>
@@ -242,36 +262,32 @@
 
                     @else
                         <a href="{{route('customer.login.register')}}" class="btn btn-primary mb-2">Please Login to Place a review</a>
-                    @endif
+                    @endauth
                     <div class="reviews">
-                        <h3>Reviews (2)</h3>
-                        <div class="review">
-                            <div class="row no-gutters">
-                                <div class="col-auto">
-                                    <h4><a href="#">Samanta J.</a></h4>
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 70%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                    </div><!-- End .rating-container -->
-                                    <span class="review-date">6 days ago</span>
-                                </div><!-- End .col -->
-                                <div class="col">
-                                    <h4>Good, perfect size</h4>
+                        <h3>Reviews ({{$review_count}})</h3>
+                        @foreach($product_review as $review)
+                            <div class="review">
+                                <div class="row no-gutters">
+                                    <div class="col-auto">
+                                        <h3><a href="#">{{$review->rel_to_customer->name}}</a></h3>
+                                        <div class="ratings-container">
 
-                                    <div class="review-content">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus cum dolores assumenda asperiores facilis porro reprehenderit animi culpa atque blanditiis commodi perspiciatis doloremque, possimus, explicabo, autem fugit beatae quae voluptas!</p>
-                                    </div><!-- End .review-content -->
+                                            @for ($i = 1; $i<=$review->star;$i++)
+                                                <i class="icon-star" style="color:yellow"></i>
+                                            @endfor
 
-                                    <div class="review-action">
-                                        <a href="#"><i class="icon-thumbs-up"></i>Helpful (2)</a>
-                                        <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                    </div><!-- End .review-action -->
-                                </div><!-- End .col-auto -->
-                            </div><!-- End .row -->
-                        </div><!-- End .review -->
+                                        </div><!-- End .rating-container -->
 
-
+                                    </div><!-- End .col -->
+                                    <div class="col">
+                                        <div class="review-content">
+                                            <p>{{$review->review}}</p>
+                                            <span class="review-date">{{$review->updated_at->diffForHumans()}}</span>
+                                        </div><!-- End .review-content -->
+                                    </div><!-- End .col-auto -->
+                                </div><!-- End .row -->
+                            </div><!-- End .review -->
+                        @endforeach
                     </div><!-- End .reviews -->
                 </div><!-- .End .tab-pane -->
             </div><!-- End .tab-content -->
@@ -358,7 +374,7 @@
 
 @endsection
 
-@section('footer-script')
+@section('footer_script')
 <script>
     $(".colorId").click(function(){
         let colorId = $(this).val();

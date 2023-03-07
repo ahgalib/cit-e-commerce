@@ -50,7 +50,7 @@
                                             </figure>
 
                                             <h3 class="product-title">
-                                                <a href="{{$cart->rel_to_product->product_name}}">{{$cart->rel_to_product->product_name}}</a>
+                                                <a href="/product/details/{{$cart->rel_to_product->slug}}">{{$cart->rel_to_product->product_name}}</a>
                                             </h3><!-- End .product-title -->
                                         </div><!-- End .product -->
                                     </td>

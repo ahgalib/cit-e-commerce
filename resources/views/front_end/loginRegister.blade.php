@@ -15,6 +15,15 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
+                        @if(session('passSuccess'))
+                            <p style="color:green;font-weight:bold;>{{session('passSuccess')}}</p>
+                        @endif
+                        @if(session('wrongCredential'))
+                            <p style="color:red;font-weight:bold;">{{session('wrongCredential')}}</p>
+                        @endif
+                        @if(session('errorVerify'))
+                            <p style="color:red;font-weight:bold;">{{session('errorVerify')}}</p>
+                        @endif
                         <form action="{{ route('customer.login') }}" method="post">
                             @csrf
                             <div class="form-group">
@@ -38,7 +47,7 @@
                                     <label class="custom-control-label" for="signin-remember-2">Remember Me</label>
                                 </div><!-- End .custom-checkbox -->
 
-                                <a href="#" class="forgot-link">Forgot Your Password?</a>
+                                <a href="{{route('customer.reset.password')}}" class="forgot-link">Forgot Your Password?</a>
                             </div><!-- End .form-footer -->
                         </form>
                         <div class="form-choice">
@@ -60,6 +69,12 @@
                         </div><!-- End .form-choice -->
                     </div><!-- .End .tab-pane -->
                     <div class="tab-pane fade show active" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
+                        @if(session('verify'))
+                            <p style="color:green;font-weight:bold;">{{session('verify')}}</p>
+                        @endif
+                        @if(session('verifySuccess'))
+                        <p style="color:green;font-weight:bold;">{{session('verifySuccess')}}</p>
+                    @endif
                         <form action="{{ route('customer.register') }}" method="post">
                             @csrf
                             <div class="form-group">

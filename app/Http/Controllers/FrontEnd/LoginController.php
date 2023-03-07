@@ -15,14 +15,19 @@ class LoginController extends Controller
 
         //return $request->all();die;
         if(Auth::guard('customerlogin')->attempt(['email'=>$request->email,'password'=>$request->password])){
-            if(Cart::where('customer_id',Auth::guard('customerlogin')->id())->exists()){
-                return redirect()->route('cart');
+            if(Auth::guard('customerlogin')->user()->email_verified_at == null){
+                return back()->with('errorVerify','Please first verify your email and then login');
+            }else{
+                if(Cart::where('customer_id',Auth::guard('customerlogin')->id())->exists()){
+                    return redirect()->route('cart');
+                }
+                else{
+                    return redirect('/');
+                }
             }
-            else{
-                return redirect('/');
-            }
+
         }else{
-            return back();
+            return back()->with('wrongCredential','Wrong Credential');
         }
     }
 

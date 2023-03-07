@@ -9,6 +9,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\OrderController;
 
 use App\Http\Controllers\FrontEnd\FrontProductController;
+use App\Http\Controllers\FrontEnd\SearchController;
 use App\Http\Controllers\FrontEnd\LoginController;
 use App\Http\Controllers\FrontEnd\RegisterController;
 use App\Http\Controllers\FrontEnd\CartController;
@@ -78,8 +79,14 @@ Route::post('order/status',[OrderController::class,'orderStatus'])->name('order.
 Route::get('/',[FrontProductController::class,'index'])->name('shop.home');
 Route::get('/product/details/{slug}',[FrontProductController::class,'productDetails'])->name('product.details');
 Route::post('/ajax/product/veriant',[FrontProductController::class,'ajaxProductVeriant']);
+//search route
+Route::get('/search',[SearchController::class,'search'])->name('search');
+//review route
+Route::post('/product/review/store',[FrontProductController::class,'productReviewStore'])->name('review.store');
 Route::get('/customer/login/register',[RegisterController::class,'customerLoginRegister'])->name('customer.login.register');
 Route::post('/customer/register',[RegisterController::class,'customerRegister'])->name('customer.register');
+//customer email verify route
+Route::get('/customer/email/verify/{token}',[RegisterController::class,'emailVerify']);
 Route::post('/customer/login',[LoginController::class,'customer_login'])->name('customer.login');
 Route::get('/customer/logout',[LoginController::class,'customerLogout'])->name('customer.logout');
 
@@ -101,6 +108,13 @@ Route::get('shop/checkout/complete/ere47833534',[CheckoutController::class,'orde
 Route::get('shop/customer/profile/4783',[CustomerController::class,'index'])->name('customer');
 Route::get('invoice/download/{order_id}',[CustomerController::class,'invoiceDownload'])->name('invoice.download');
 
+//password reset route
+Route::get('customer/reset/password',[CustomerController::class,'customer_reset_password'])->name('customer.reset.password');
+Route::post('customer/reset/password/send',[CustomerController::class,'customer_reset_password_send'])->name('customer.reset.password.send');
+Route::get('customer/reset/password/form/{token}',[CustomerController::class,'customer_reset_password_form'])->name('customer.reset.password.form');
+Route::post('customer/update/forget/password/form',[CustomerController::class,'customer_update_forget_password_form'])->name('update.forget.password');
+
+
 // SSLCOMMERZ Start
 Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
 Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
@@ -114,3 +128,4 @@ Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
 
 Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //SSLCOMMERZ END
+

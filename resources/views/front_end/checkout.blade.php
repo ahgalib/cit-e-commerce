@@ -183,7 +183,7 @@
 @endsection
 
 
-@section('footer-script')
+@section('footer_script')
 <script>
     $(".charge").click(function(){
         let charge = $(this).val();
